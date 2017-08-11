@@ -24,15 +24,15 @@ public class HelloEsper {
     public static void main(String[] args) {
         /* 设置配置信息 */
         Configuration cepConfig = new Configuration();
-        cepConfig.addEventType("StockTick", Tick.class.getName()); //添加事件类型定义
+        cepConfig.addEventType("StockTick", Tick.class); //添加事件类型定义
 
         /* 创建引擎实例 */
         EPServiceProvider cepProvider = EPServiceProviderManager.getProvider("myCEPEngine",cepConfig);
 
         /* 创建statement的管理接口实例 */
         EPAdministrator cepAdmin = cepProvider.getEPAdministrator();
-        EPStatement cepStatement = cepAdmin.createEPL("select istream * from " +
-                "StockTick.win:length(3)");      //定义事件触发策略
+        EPStatement cepStatement = cepAdmin.createEPL("select avg(price) from " +
+                "StockTick.win:length_batch(3)");      //定义事件触发策略
 
         /*绑定事件处理对象*/
         cepStatement.addListener(new EventHandler_1());
@@ -40,7 +40,8 @@ public class HelloEsper {
         /* 引擎实例运行接口，负责为引擎实例接收数据并发送给引擎处理 */
         EPRuntime cepRT = cepProvider.getEPRuntime();   //启动CEP引擎
 
-        while(true) {
+
+        for(int i = 0; i < 9; i++) {
             GenerateRandomTick(cepRT);    //生成随机事件
             try {
                 Thread.sleep(500);
