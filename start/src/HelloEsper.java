@@ -31,8 +31,10 @@ public class HelloEsper {
 
         /* 创建statement的管理接口实例 */
         EPAdministrator cepAdmin = cepProvider.getEPAdministrator();
-        EPStatement cepStatement = cepAdmin.createEPL("select avg(price) from " +
-                "StockTick.win:length_batch(3)");      //定义事件触发策略
+        //EPStatement cepStatement = cepAdmin.createEPL("select avg(price) from " +
+        //        "StockTick.win:length_batch(3)");      //定义事件触发策略
+        EPStatement cepStatement = cepAdmin.createEPL("select price from " +
+                "StockTick");      //定义事件触发策略
 
         /*绑定事件处理对象*/
         cepStatement.addListener(new EventHandler_1());

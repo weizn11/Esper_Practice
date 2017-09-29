@@ -9,7 +9,7 @@ public class EventHandler_1 implements UpdateListener {
     public void update(EventBean[] newData, EventBean[] oldData) {
         if(newData != null) {
             System.out.println("New event list length: " + newData.length);
-            double avg = (double)newData[0].get("avg(price)");
+            double avg = (double)newData[0].get("price");
             System.out.println("Average price: " + avg);
         }
     }
